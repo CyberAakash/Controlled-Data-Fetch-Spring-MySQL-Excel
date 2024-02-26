@@ -12,4 +12,6 @@ public interface CustomerService {
     List<CustomerDto> get20Customers();
 
     List<CustomerDto> getCustomCustomers(int page, int size);
+
+    int getTotalRecords();
 }

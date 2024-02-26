@@ -26,16 +26,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void saveCustomersToDatabase(MultipartFile file) {
-//        if(ExcelUploadService.isValidExcelFile(file)){
         try {
             List<Customer> customers = ExcelUploadService.getCustomersDataFromExcel(file.getInputStream());
             this.customerRepository.saveAll(customers);
         } catch (IOException e) {
             throw new IllegalArgumentException("The file is not a valid excel file");
         }
-//        } else {
-//            throw new IllegalArgumentException("The file is not a valid excel file");
-//        }
     }
 
     public List<CustomerDto> getCustomers() {
@@ -64,5 +60,10 @@ public class CustomerServiceImpl implements CustomerService {
         return customers.stream()
                 .map(CustomerMapper::mapToCustomerDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getTotalRecords() {
+        return (int) customerRepository.count();
     }
 }
